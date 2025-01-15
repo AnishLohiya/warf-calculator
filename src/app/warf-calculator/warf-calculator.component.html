@@ -1,0 +1,93 @@
+<div class="container">
+    <h1>WARF Calculator</h1>
+
+    <div class="form-group">
+        <label for="fundSelect">Select Fund:</label>
+        <select id="fundSelect" class="form-control" (change)="onFundSelect($event)">
+            <option value="">-- Select a Fund --</option>
+            <option *ngFor="let fund of funds" [value]="fund.fund">
+                {{ fund.fund }}
+            </option>
+        </select>
+    </div>
+
+    <h3>Original Data</h3>
+    
+    <div class="tables-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fund</th>
+                    <th>WAS</th>
+                    <th>Diversity</th>
+                    <th>WARF</th>
+                    <th>MARR</th>
+                    <th>RRM</th>
+                    <th>MPA</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="selectedFund">
+                    <td>{{ selectedFund.fund }}</td>
+                    <td>{{ selectedFund.WAS }}</td>
+                    <td>{{ selectedFund.Diversity }}</td>
+                    <td>{{ selectedFund.WARF }}</td>
+                    <td>{{ selectedFund.MRR }}</td>
+                    <td>{{ selectedFund.RRM }}</td>
+                    <td>{{ selectedFund.MPA }}</td>
+                    <td>{{ selectedFund.result }}</td>
+                </tr>
+                <tr *ngIf="!selectedFund">
+                    <td colspan="8">No fund selected.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fund</th>
+                    <th>WAS</th>
+                    <th>Diversity</th>
+                    <th>WARF</th>
+                    <th>MRR</th>
+                    <th>RRM</th>
+                    <th>MPA</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="selectedFund">
+                    <td>{{ selectedFund.fund }}</td>
+                    <td>{{ adjustedValues.WAS }}</td>
+                    <td>{{ adjustedValues.Diversity }}</td>
+                    <td>{{ selectedFund.WARF }}</td>
+                    <td>{{ adjustedValues.MRR }}</td>
+                    <td>{{ selectedFund.RRM }}</td>
+                    <td>{{ selectedFund.MPA }}</td>
+                    <td>{{ selectedFund.result }}</td>
+                </tr>
+                <tr *ngIf="!selectedFund">
+                    <td colspan="8">No adjustments available.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <h3>Adjust Values</h3>
+
+    <div class="slider-group">
+        <label for="wasSlider">WAS: {{ adjustedValues.WAS }}</label>
+        <input id="wasSlider" type="range" min="-5" max="5" [(ngModel)]="adjustments.WAS" (input)="updateAdjustedValues()" />
+
+        <label for="diversitySlider">Diversity: {{ adjustedValues.Diversity }}</label>
+        <input id="diversitySlider" type="range" min="-5" max="5" [(ngModel)]="adjustments.Diversity" (input)="updateAdjustedValues()" />
+
+        <label for="mrrSlider">MARR: {{ adjustedValues.MRR }}</label>
+        <input id="mrrSlider" type="range" min="-5" max="5" step="0.2" [(ngModel)]="adjustments.MRR" (input)="updateAdjustedValues()" />
+    </div>
+
+</div>
+
