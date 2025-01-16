@@ -1,65 +1,96 @@
 {
-    "fundsInfo": [
-      {
-        "fund": "CLO I",
-        "WAS": 3.46,
-        "Diversity": 80,
-        "WARF": 2694,
-        "MRR": 47.50,
-        "RRM": 33,
-        "MPA": 0,
-        "result": "PASS"
-      },
-      {
-        "fund": "CLO II",
-        "WAS": 3.12,
-        "Diversity": 85,
-        "WARF": 2750,
-        "MRR": 48.20,
-        "RRM": 35,
-        "MPA": 1,
-        "result": "PASS"
-      },
-      {
-        "fund": "CLO III",
-        "WAS": 3.85,
-        "Diversity": 78,
-        "WARF": 2620,
-        "MRR": 46.80,
-        "RRM": 32,
-        "MPA": 0,
-        "result": "FAIL"
-      },
-      {
-        "fund": "CLO IV",
-        "WAS": 3.65,
-        "Diversity": 90,
-        "WARF": 2805,
-        "MRR": 49.00,
-        "RRM": 36,
-        "MPA": 0,
-        "result": "PASS"
-      },
-      {
-        "fund": "CLO V",
-        "WAS": 3.30,
-        "Diversity": 82,
-        "WARF": 2680,
-        "MRR": 47.00,
-        "RRM": 34,
-        "MPA": 1,
-        "result": "PASS"
-      },
-      {
-        "fund": "CLO VI",
-        "WAS": 3.55,
-        "Diversity": 88,
-        "WARF": 2735,
-        "MRR": 48.50,
-        "RRM": 33,
-        "MPA": 0,
-        "result": "PASS"
+  "fundsInfo": [
+    {
+      "fund": "CLO I",
+      "Results": {
+        "Result": {
+          "WAS": 3.46,
+          "Diversity": 85,
+          "WARF": 2694,
+          "MRR": 47.50
+        },
+        "Limit": {
+          "WAS": 3.43,
+          "Diversity": 80,
+          "WARF": 2806.75,
+          "MRR": 43.00
+        },
+        "result": {
+          "WAS": "PASS",
+          "Diversity": "PASS",
+          "WARF": "PASS",
+          "MRR": "PASS"
+        }
       }
-    ]
-  }
-  
+    },
+    {
+      "fund": "CLO II",
+      "Results": {
+        "Result": {
+          "WAS": 3.50,
+          "Diversity": 78,
+          "WARF": 2750,
+          "MRR": 42.00
+        },
+        "Limit": {
+          "WAS": 3.40,
+          "Diversity": 75,
+          "WARF": 2800,
+          "MRR": 44.00
+        },
+        "result": {
+          "WAS": "PASS",
+          "Diversity": "PASS",
+          "WARF": "PASS",
+          "MRR": "FAIL"
+        }
+      }
+    },
+    {
+      "fund": "CLO III",
+      "Results": {
+        "Result": {
+          "WAS": 3.39,
+          "Diversity": 82,
+          "WARF": 2810,
+          "MRR": 48.00
+        },
+        "Limit": {
+          "WAS": 3.45,
+          "Diversity": 85,
+          "WARF": 2805,
+          "MRR": 46.00
+        },
+        "result": {
+          "WAS": "FAIL",
+          "Diversity": "PASS",
+          "WARF": "FAIL",
+          "MRR": "PASS"
+        }
+      }
+    },
+    {
+      "fund": "CLO IV",
+      "Results": {
+        "Result": {
+          "WAS": 3.44,
+          "Diversity": 88,
+          "WARF": 2680,
+          "MRR": 45.50
+        },
+        "Limit": {
+          "WAS": 3.46,
+          "Diversity": 90,
+          "WARF": 2700,
+          "MRR": 46.00
+        },
+        "result": {
+          "WAS": "PASS",
+          "Diversity": "FAIL",
+          "WARF": "PASS",
+          "MRR": "PASS"
+        }
+      }
+    }
+  ]
+}

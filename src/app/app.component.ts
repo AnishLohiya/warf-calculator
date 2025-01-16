@@ -4,7 +4,7 @@ import { WarfCalculatorComponent } from "./warf-calculator/warf-calculator.compo
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, WarfCalculatorComponent],
+  imports: [WarfCalculatorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

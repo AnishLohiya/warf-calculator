@@ -8,7 +8,7 @@ import { WarfCalculatorService } from '../warf-calculator.service';
   selector: 'app-warf-calculator',
   imports: [NgFor, NgIf, FormsModule],
   templateUrl: './warf-calculator.component.html',
-  styleUrl: './warf-calculator.component.scss'
+  styleUrl: './warf-calculator.component.scss',
 })
 export class WarfCalculatorComponent {
   funds: CLOFund[] = [];
@@ -21,48 +21,87 @@ export class WarfCalculatorComponent {
     this.loadData();
   }
 
+  fundColumns = ['WAS', 'Diversity', 'WARF', 'MRR'];
   selectedFund!: CLOFund | null;
+  selectedFundData!: {
+   Result: {
+      WAS: number;
+      Diversity: number;
+      WARF: number;
+      MRR: number;
+    };
+    Limit: {
+      WAS: number;
+      Diversity: number;
+      WARF: number;
+      MRR: number;
+    };
+    Cushion: {
+      WAS: number;
+      Diversity: number;
+      WARF: number;
+      MRR: number;
+    };
+    result: {
+      WAS: string;
+      Diversity: string;
+      WARF: string;
+      MRR: string;
+    }
+  }
 
   loadData() {
     this.warfService.getCLOFunds().subscribe({
       next: (funds: CLOFund[]) => {
         this.funds = funds;
-        console.log(funds);
       },
       error: (err) => {
         console.error(err);
-      }
-    })
+      },
+    });
   }
 
- adjustments = {
-    WAS: 0,
-    Diversity: 0,
-    MRR: 0
+  adjustments = {
+    Result: {
+      WAS: 0,
+      Diversity: 0,
+      MRR: 0,
+    },
   };
 
   adjustedValues = {
-    WAS: 0,
-    Diversity: 0,
-    MRR: 0
+    Result: {
+      WAS: 0,
+      Diversity: 0,
+      MRR: 0,
+    },
   };
 
-  onFundSelect(event: Event): void {
-    const selectedFundName = (event.target as HTMLSelectElement).value;
-    this.selectedFund = this.funds.find(fund => fund.fund === selectedFundName) || null;
+ onFundSelect(event: Event): void {
+  const selectedFundName = (event.target as HTMLSelectElement).value;
+  this.selectedFund =
+    this.funds.find((fund) => fund.fund === selectedFundName) || null;
 
-    // Reset adjustments
-    if (this.selectedFund) {
-      this.adjustments = { WAS: 0, Diversity: 0, MRR: 0 };
-      this.updateAdjustedValues();
-    }
+  if (this.selectedFund?.Results?.Result) {
+    this.selectedFundData = this.selectedFund.Results;
   }
+
+  console.log(this.selectedFundData);
+
+  if (this.selectedFund) {
+    this.adjustments.Result.WAS = 0;
+    this.adjustments.Result.Diversity = 0;
+    this.adjustments.Result.MRR = 0;
+    this.updateAdjustedValues();
+  }
+}
+
 
   updateAdjustedValues(): void {
     if (this.selectedFund) {
-      this.adjustedValues.WAS = this.selectedFund.WAS + this.adjustments.WAS;
-      this.adjustedValues.Diversity = this.selectedFund.Diversity + this.adjustments.Diversity;
-      this.adjustedValues.MRR = this.selectedFund.MRR + this.adjustments.MRR;
+      this.adjustedValues.Result.WAS = this.selectedFundData.Result.WAS + this.adjustments.Result.WAS;
+      this.adjustedValues.Result.Diversity = this.selectedFundData.Result.Diversity + this.adjustments.Result.Diversity;
+      this.adjustedValues.Result.MRR = this.selectedFundData.Result.MRR + this.adjustments.Result.MRR;
     }
   }
 }

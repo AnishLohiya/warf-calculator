@@ -10,14 +10,14 @@ body {
   font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: radial-gradient(#303b37, #1a1f1d);
-  color: #e1eeeb;
+  background: #1E293B;
+  color: #fff;
   min-height: 100vh;
-}
-
-.center {
-  text-align: center;
 }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
