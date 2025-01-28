@@ -12,47 +12,74 @@
           class="w-full border border-gray-300 text-slate-800 rounded-lg p-2"
           (change)="onFundSelect($event)"
         >
-          <option value="">-- Select a Fund --</option>
+          <option value=""  disabled selected>Select a Fund</option>
           <option *ngFor="let fund of funds" [value]="fund.fund">
             {{ fund.fund }}
           </option>
         </select>
       </div>
 
-      <h3 class="text-2xl font-semibold mt-28 mb-4">Optimize Results</h3>
+      <div class="flex flex-row justify-between mt-12">
+        <h3 class="text-2xl font-semibold mb-6">Optimize Results</h3>
+        @if(selectedFund) {
+          <button (click)="resetSliders()" title="Resest to CLO Values" class="mb-6">
+            <svg
+              width="24px"
+              height="24px"
+              viewBox="0 0 21 21"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                stroke="#ffffff"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                transform="matrix(0 1 1 0 2.5 2.5)"
+              >
+                <path
+                  d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"
+                />
+                <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)" />
+              </g>
+            </svg>
+          </button>
+        }
+      </div>
+
       <div class="space-y-6">
         <div>
-            <label for="wasSlider" class="block text-lg font-medium mb-2">
-              WAS: {{ adjustedValues.Result.WAS.toFixed(2) }} %
-            </label>
-            <div class="flex justify-between text-sm text-gray-600">
-                @if(selectedFundData) {
-                    <span>{{ (selectedFundData.Result.WAS - 5).toFixed(2) }} %</span>
-                    <span>{{( selectedFundData.Result.WAS + 5).toFixed(2) }} %</span>
-                }
-            </div>
-            <input
-              id="wasSlider"
-              type="range"
-              min="-5"
-              max="5"
-              step="0.2"
-              class="w-full"
-              [(ngModel)]="adjustments.Result.WAS"
-              (input)="updateAdjustedValues()"
-            />
-          </div>
-
-        <div>
-          <label for="diversitySlider" class="block text-lg font-medium mb-2"
-            >Diversity: {{ adjustedValues.Result.Diversity }}</label
-          >
+          <label for="wasSlider" class="block text-lg font-medium mb-4">
+            WAS: <span [ngClass]="sliderColorClass(adjustedValues.Result.WAS)">{{ adjustedValues.Result.WAS.toFixed(2) }} % </span>
+          </label>
           <div class="flex justify-between text-sm text-white">
             @if(selectedFundData) {
-                <span>{{ adjustedValues.Result.Diversity - 5}}</span>
-                <span>{{ adjustedValues.Result.Diversity + 5}}</span>
+            <span>{{ (selectedFundData.Result.WAS - 5).toFixed(2) }} %</span>
+            <span>{{ (selectedFundData.Result.WAS + 5).toFixed(2) }} %</span>
             }
-            </div>
+          </div>
+          <input
+            id="wasSlider"
+            type="range"
+            min="-5"
+            max="5"
+            step="0.2"
+            class="w-full"
+            [(ngModel)]="adjustments.Result.WAS"
+            (input)="updateAdjustedValues()"
+          />
+        </div>
+
+        <div>
+          <label for="diversitySlider" class="block text-lg font-medium mb-4"
+            >Diversity: <span [ngClass]="sliderColorClass(adjustedValues.Result.Diversity)">{{ adjustedValues.Result.Diversity}} </span>
+          </label>
+          <div class="flex justify-between text-sm text-white">
+            @if(selectedFundData) {
+            <span>{{ adjustedValues.Result.Diversity - 5 }}</span>
+            <span>{{ adjustedValues.Result.Diversity + 5 }}</span>
+            }
+          </div>
           <input
             id="diversitySlider"
             type="range"
@@ -65,13 +92,13 @@
         </div>
 
         <div>
-          <label for="mrrSlider" class="block text-lg font-medium mb-2"
-            >MARR: {{ adjustedValues.Result.MRR }}</label
-          >
-          <div class="flex justify-between text-sm text-gray-600">
+          <label for="mrrSlider" class="block text-lg font-medium mb-4">
+            MARR: <span [ngClass]="sliderColorClass(adjustedValues.Result.MRR)">{{ adjustedValues.Result.MRR}} % </span>
+          </label>
+          <div class="flex justify-between text-sm text-white">
             @if(selectedFundData) {
-                <span>{{ selectedFundData.Result.MRR - 5 }}</span>
-                <span>{{ selectedFundData.Result.MRR + 5 }}</span>
+            <span>{{ adjustedValues.Result.MRR - 5 }}</span>
+            <span>{{ adjustedValues.Result.MRR + 5 }}</span>
             }
           </div>
           <input
@@ -113,10 +140,10 @@
               {{ selectedFundData.Result.Diversity }}
             </td>
             <td class="p-3 border border-gray-300">
-              {{ selectedFundData.Result.MRR }}%
+              {{ selectedFundData.Result.WARF }}
             </td>
             <td class="p-3 border border-gray-300">
-              {{ selectedFundData.Result.WARF }}
+              {{ selectedFundData.Result.MRR }}%
             </td>
           </tr>
           <tr>
@@ -128,10 +155,10 @@
               {{ selectedFundData.Limit.Diversity }}
             </td>
             <td class="p-3 border border-gray-300">
-              {{ selectedFundData.Limit.MRR }}%
+              {{ selectedFundData.Limit.WARF }}
             </td>
             <td class="p-3 border border-gray-300">
-              {{ selectedFundData.Limit.WARF }}
+              {{ selectedFundData.Limit.MRR }}%
             </td>
           </tr>
           <tr>
@@ -150,31 +177,44 @@
               }}
             </td>
             <td class="p-3 border border-gray-300">
+              {{ selectedFundData.Limit.WARF - selectedFundData.Result.WARF }}
+            </td>
+            <td class="p-3 border border-gray-300">
               {{
                 (
                   selectedFundData.Result.MRR - selectedFundData.Limit.MRR
                 ).toFixed(2)
               }}%
             </td>
-            <td class="p-3 border border-gray-300">
-              {{ selectedFundData.Limit.WARF - selectedFundData.Result.WARF }}
-            </td>
           </tr>
           <tr>
             <td class="p-3 border border-gray-300">Pass/Fail</td>
-            <td class="p-3 border border-gray-300">
+            <td
+              class="p-3 border border-gray-300 font-semibold"
+              [ngClass]="resultColorClass(selectedFundData.result.WAS)"
+            >
               {{ selectedFundData.result.WAS }}
             </td>
-            <td class="p-3 border border-gray-300">
+            <td
+              class="p-3 border border-gray-300 font-semibold"
+              [ngClass]="resultColorClass(selectedFundData.result.Diversity)"
+            >
               {{ selectedFundData.result.Diversity }}
             </td>
-            <td class="p-3 border border-gray-300">
+            <td
+              class="p-3 border border-gray-300 font-semibold"
+              [ngClass]="resultColorClass(selectedFundData.result.MRR)"
+            >
               {{ selectedFundData.result.MRR }}
             </td>
-            <td class="p-3 border border-gray-300">
+            <td
+              class="p-3 border border-gray-300 font-semibold"
+              [ngClass]="resultColorClass(selectedFundData.result.WARF)"
+            >
               {{ selectedFundData.result.WARF }}
             </td>
           </tr>
+          
         </tbody>
         <ng-template #noFundSelected>
           <tr>
@@ -201,7 +241,8 @@
       </table>
 
       <div class="text-center mt-12">
-        Result: {{ adjustedValues.Result.WAS.toFixed(2) }}%</div>
+        Result: {{ adjustedValues.Result.WAS.toFixed(2) }}%
+      </div>
     </div>
   </div>
 </div>
